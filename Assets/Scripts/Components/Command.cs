@@ -24,8 +24,6 @@ public class Command : MonoBehaviour
 
     private IEnumerable<Action> HandleCommand()
     {
-        yield return TimeYields.WaitOneFrame;
-        
         while (enabled)
         {
             var mousePos = Toolbox.Instance.MainInput.actions["point"].ReadValue<Vector2>();

@@ -44,7 +44,7 @@ public class Unit : MonoBehaviour
     public void Select()
     {
         SelectionSprite.enabled = true;
-        if (CommandsObject == null) return;
+        if (CommandsObject == null) return; 
         CommandsObject.gameObject.SetActive(true);
     }
 

@@ -11,6 +11,7 @@ public class BuildScout : MonoBehaviour
     public BuildQueue BuildQueue;
     public Transform SpawnPoint;
     public float BuildTimeInSeconds;
+    public ScoutPool ObjectPool;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -35,6 +36,6 @@ public class BuildScout : MonoBehaviour
 
     private void CreateScout()
     {
-        
+        if (!ObjectPool.Pool.TryGetFromPool(out Scout obj)) return;
     }
 }

@@ -17,12 +17,6 @@ public class CommandManager : MonoBehaviour
         _commands.Add(command);
     }
 
-    public void Remove(Command command)
-    {
-        if (!_commands.Contains(command)) return;
-        _commands.Remove(command);
-    }
-
     // Start is called before the first frame update
     void OnEnable()
     {

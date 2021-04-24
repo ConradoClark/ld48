@@ -41,7 +41,6 @@ public class BuildQueue: MonoBehaviour
                 continue;
             }
 
-            Debug.Log("enable progress bar");
             Progress.EnableBar();
             var currentBuild = _buildQueue.Peek();
             var buildTimeInMillis = currentBuild.BuildTimeInSeconds * 1000;

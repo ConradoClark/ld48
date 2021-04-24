@@ -6,6 +6,7 @@ using Licht.Impl.Orchestration;
 using Licht.Interfaces.Orchestration;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class UnitManager : MonoBehaviour
 {
@@ -24,12 +25,14 @@ public class UnitManager : MonoBehaviour
 
     public void DeselectUnit(Unit unit)
     {
+        if (unit == null) return;
         SelectedUnit = null;
         unit.Deselect();
     }
 
     public void SelectUnit(Unit unit)
     {
+        if (SelectedUnit == unit) return;
         SelectedUnit = unit;
         unit.Select();
     }
@@ -42,7 +45,7 @@ public class UnitManager : MonoBehaviour
             return;
         }
 
-        if (SelectedUnit != null) DeselectUnit(SelectedUnit);
+        if (SelectedUnit != objectOnCursor) DeselectUnit(SelectedUnit);
         SelectUnit(objectOnCursor);
     }
 

@@ -213,6 +213,7 @@ MonoBehaviour:
   Info:
     Name: Inventor
     Description: Allows researching innovative underwater technologies
+    Color: {r: 0, g: 0, b: 0, a: 0}
   Type: 1
   CellsCost: 1
   CellSpaces: 0

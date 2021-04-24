@@ -5,18 +5,11 @@ using UnityEngine;
 
 public class Scout : MonoBehaviour, IPoolableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void Initialize()
     {
-
     }
 
-    public bool IsActive => enabled;
+    public bool IsActive => gameObject.activeSelf;
     public bool Deactivate()
     {
         gameObject.SetActive(false);
