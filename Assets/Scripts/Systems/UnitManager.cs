@@ -15,11 +15,11 @@ public class UnitManager : MonoBehaviour
 
     public void AddUnit(Unit unit)
     {
-        if (!_units.Contains(unit)) _units.Add(unit);
-        else
-        {
-            Debug.Log("already has this unit " + unit);
-        }
+        if (_units.Contains(unit)) return;
+        _units.Add(unit);
+
+        if (unit.Type == Unit.UnitType.Living) Toolbox.Instance.ResourceManager.AddUnit(unit.CellsCost);
+        if (unit.Type == Unit.UnitType.Building) Toolbox.Instance.ResourceManager.AddCells(unit.CellSpaces);
     }
 
     public void DeselectUnit(Unit unit)
@@ -64,13 +64,13 @@ public class UnitManager : MonoBehaviour
             var clickAction = Toolbox.Instance.MainInput.actions["click"];
             var press = clickAction.phase == InputActionPhase.Performed && clickAction.triggered && clickAction.ReadValue<float>()==0f;
 
-            var objectOnCursor = _units.FirstOrDefault(unit => unit.Collider.OverlapPoint(worldPoint));
-
-            if (press) HandleClick(objectOnCursor);
-            foreach (var action in HandleUI(objectOnCursor))
-            {
-                yield return action;
-            }
+           var objectOnCursor = _units.FirstOrDefault(unit => unit.Collider.OverlapPoint(worldPoint));
+           
+           if (press) HandleClick(objectOnCursor);
+           foreach (var action in HandleUI(objectOnCursor))
+           {
+               yield return action;
+           }
 
             yield return TimeYields.WaitOneFrame;
         }
@@ -82,12 +82,12 @@ public class UnitManager : MonoBehaviour
         {
             if (SelectedUnit == null)
             {
-                Toolbox.Instance.UIManager.SetSelection("", "");
+                Toolbox.Instance.UIManager.SetSelection("", "", Color.white);
                 yield break;
             }
-            Toolbox.Instance.UIManager.SetSelection(SelectedUnit.Info.Name, SelectedUnit.Info.Description);
+            Toolbox.Instance.UIManager.SetSelection(SelectedUnit.Info.Name, SelectedUnit.Info.Description, SelectedUnit.Info.Color);
             yield break;
         }
-        if (objectOnCursor == SelectedUnit) Toolbox.Instance.UIManager.SetSelection(objectOnCursor.Info.Name, objectOnCursor.Info.Description);
+        if (objectOnCursor == SelectedUnit) Toolbox.Instance.UIManager.SetSelection(objectOnCursor.Info.Name, objectOnCursor.Info.Description, objectOnCursor.Info.Color);
     }
 }

@@ -16,6 +16,13 @@ public class Unit : MonoBehaviour
     {
         public string Name;
         public string Description;
+        public Color Color = Color.white;
+    }
+
+    public enum UnitType
+    {
+        Building,
+        Living
     }
 
     public float HitPoints;
@@ -24,6 +31,10 @@ public class Unit : MonoBehaviour
     public Collider2D Collider;
     public Transform CommandsObject;
     public UnitInfo Info;
+    public UnitType Type;
+    public int CellsCost;
+    public int CellSpaces;
+    
 
     void OnEnable()
     {
@@ -33,12 +44,14 @@ public class Unit : MonoBehaviour
     public void Select()
     {
         SelectionSprite.enabled = true;
+        if (CommandsObject == null) return;
         CommandsObject.gameObject.SetActive(true);
     }
 
     public void Deselect()
     {
         SelectionSprite.enabled = false;
+        if (CommandsObject == null) return;
         CommandsObject.gameObject.SetActive(false);
     }
 
@@ -48,7 +61,7 @@ public class Unit : MonoBehaviour
         {
             if (x == null || y==null) return -1;
 
-            var comparison = x.UnitSprite.sortingOrder.CompareTo(y.UnitSprite.sortingOrder);
+            var comparison = y.UnitSprite.sortingOrder.CompareTo(x.UnitSprite.sortingOrder);
             if (comparison == 0) comparison = x.GetInstanceID().CompareTo(y.GetInstanceID());
             return comparison;
         }
