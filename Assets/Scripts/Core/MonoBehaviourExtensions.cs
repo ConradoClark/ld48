@@ -8,6 +8,7 @@ public static class MonoBehaviourExtensions
         T result = child.GetComponent<T>();
         if (result == null)
         {
+            Debug.Log("type " + typeof(T) + " not found. Adding new one.");
             result = child.gameObject.AddComponent<T>();
         }
         return result;

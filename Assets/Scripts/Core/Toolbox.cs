@@ -7,31 +7,30 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public class Toolbox : Singleton<Toolbox>
 {
-    public static BasicMachinery MainMachinery;
-    public static DefaultTimer MainTimer;
-    public static PlayerInput MainInput;
-    public static Camera MainCamera;
-    public static ResourceManager ResourceManager;
-    public static UnitManager UnitManager;
-
-    public PlayerInput PlayerInput;
-    public Camera PlayerCamera;
+    public BasicMachinery MainMachinery;
+    public DefaultTimer MainTimer;
+    public ResourceManager ResourceManager { get; private set; }
+    public UnitManager UnitManager { get; private set; }
+    public UIManager UIManager;
+    public PlayerInput MainInput;
+    public Camera MainCamera;
 
     protected Toolbox() { }
 
-    void Awake()
+    void OnEnable()
     {
         MainMachinery = new BasicMachinery();
         MainTimer = new DefaultTimer(() => Time.deltaTime * 1000f);
-        MainInput = PlayerInput;
-        MainCamera = PlayerCamera;
-        ResourceManager = RegisterComponent<ResourceManager>();
-        UnitManager = RegisterComponent<UnitManager>();
+        MainInput ??= RegisterComponent<PlayerInput>();
+        MainCamera ??= RegisterComponent<Camera>();
+        ResourceManager ??= RegisterComponent<ResourceManager>();
+        UnitManager ??= RegisterComponent<UnitManager>();
+        UIManager ??= RegisterComponent<UIManager>(); 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
 
-    void Update()
+    void Update() 
     {
         MainMachinery.Update();
         MainTimer.Update();
