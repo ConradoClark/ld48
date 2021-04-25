@@ -39,6 +39,7 @@ public class UnitManager : MonoBehaviour
 
     private void HandleClick(Unit objectOnCursor)
     {
+        if (Toolbox.Instance.CommandManager.Hovering) return;
         if (objectOnCursor == null)
         {
             if (SelectedUnit != null) DeselectUnit(SelectedUnit);

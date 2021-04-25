@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Licht.Impl.Orchestration;
 using Licht.Interfaces.Orchestration;
+using UnityEditor.EventSystems;
 using UnityEngine;
 
 public class CommandManager : MonoBehaviour
 {
     private HashSet<Command> _commands;
     private IMachine _hoverMachine;
+    public bool Hovering;
 
     public void Add(Command command)
     {
@@ -36,11 +38,13 @@ public class CommandManager : MonoBehaviour
 
             if (objectOnCursor == null)
             {
+                Hovering = false;
                 Toolbox.Instance.UIManager.SetCommandInfo("", "", Color.white);
                 yield return TimeYields.WaitOneFrame;
                 continue;
             }
 
+            Hovering = true;
             Toolbox.Instance.UIManager.SetCommandInfo(objectOnCursor.Title, objectOnCursor.Description, objectOnCursor.TitleColor);
             yield return TimeYields.WaitOneFrame;
         }
